@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Contact | Creovibe{% endblock %}
+
+{% block content %}
+<section class="max-w-4xl mx-auto text-center">
+  <h1 class="text-4xl font-bold mb-4 text-brand">Let's Connect</h1>
+  <p class="text-soft mb-10 text-sm md:text-base">
+    Have a project, collaboration, or just want to say hi?  
+    Fill out the form below — I’ll get back to you soon!
+  </p>
+
+  <form method="POST" class="bg-mid p-8 rounded-2xl shadow-lg space-y-5 max-w-2xl mx-auto">
+    <div>
+      <input
+        type="text"
+        name="name"
+        placeholder="Your Name"
+        class="w-full p-3 rounded-lg bg-dark border border-gray-700 text-light focus:outline-none focus:border-brand"
+        required
+      />
+    </div>
+    <div>
+      <input
+        type="email"
+        name="email"
+        placeholder="Your Email"
+        class="w-full p-3 rounded-lg bg-dark border border-gray-700 text-light focus:outline-none focus:border-brand"
+        required
+      />
+    </div>
+    <div>
+      <textarea
+        name="message"
+        placeholder="Your Message"
+        rows="5"
+        class="w-full p-3 rounded-lg bg-dark border border-gray-700 text-light focus:outline-none focus:border-brand"
+        required
+      ></textarea>
+    </div>
+    <button
+      type="submit"
+      class="btn w-full py-3 text-lg font-semibold tracking-wide shadow-lg"
+    >
+      Send Message
+    </button>
+  </form>
+
+  <div class="mt-12 text-sm text-gray-500">
+    <p><strong>Email:</strong> creovibe001@gmail.com</p>
+    <p><strong>Location:</strong> Kolkata, India</p>
+  </div>
+</section>
+{% endblock %}

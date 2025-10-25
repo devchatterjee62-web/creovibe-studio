@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="text-3xl mb-6 text-center gold font-semibold">Upload Photo/Video</h2>
+
+<form action="{{ url_for('admin_dashboard') }}" method="POST" enctype="multipart/form-data" class="max-w-md mx-auto bg-gray-900 p-6 rounded-lg border border-gray-800">
+  <label class="block mb-2 text-gray-300">Choose Media (Photo or Video)</label>
+  <input type="file" name="media" class="w-full mb-4 text-gray-100">
+
+  <label class="block mb-2 text-gray-300">Caption</label>
+  <input type="text" name="caption" class="w-full mb-4 p-2 rounded bg-gray-800 text-white">
+
+  <label class="inline-flex items-center mb-4 text-gray-300">
+    <input type="checkbox" name="is_hero" class="mr-2">
+    Set as Hero Media
+  </label>
+
+  <label class="block mb-2 text-gray-300">Assign to Service (optional)</label>
+  <select name="service_id" class="w-full mb-4 p-2 rounded bg-gray-800 text-white">
+    <option value="">-- None --</option>
+    {% for service in services %}
+      <option value="{{ service.id }}">{{ service.name }}</option>
+    {% endfor %}
+  </select>
+
+  <button type="submit" class="btn w-full">Upload</button>
+</form>
+
+{% endblock %}

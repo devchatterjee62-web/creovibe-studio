@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}Creovibe | Our Services{% endblock %}
+{% block content %}
+
+<!-- ================= HERO ================= -->
+{% if hero %}
+<section class="relative overflow-hidden bg-gradient-to-b from-dark via-mid to-[#1a1a1a] text-center text-light h-[70vh] flex items-center justify-center">
+  {% if hero.media_type == 'video' %}
+  <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover">
+    <source src="{{ url_for('static', filename='uploads/' + hero.filename) }}" type="video/mp4">
+  </video>
+  {% else %}
+  <img src="{{ url_for('static', filename='uploads/' + hero.filename) }}" 
+       alt="Hero Image" class="absolute inset-0 w-full h-full object-cover">
+  {% endif %}
+  <div class="absolute inset-0 bg-black/60 flex flex-col justify-center items-center px-6">
+    <h1 class="text-5xl md:text-6xl font-extrabold text-brand mb-6 tracking-tight">Our Services</h1>
+    <p class="text-lg text-soft max-w-2xl mx-auto">
+      {{ hero.caption or 'We craft digital experiences and marketing strategies that inspire, engage, and convert.' }}
+    </p>
+  </div>
+</section>
+{% else %}
+<section class="relative overflow-hidden bg-gradient-to-b from-dark via-mid to-[#1a1a1a] text-center text-light py-28">
+  <div class="max-w-3xl mx-auto px-6">
+    <h1 class="text-5xl md:text-6xl font-extrabold text-brand mb-6 tracking-tight">
+      Our Services
+    </h1>
+    <p class="text-lg text-soft max-w-2xl mx-auto">
+      We craft digital experiences and marketing strategies that inspire, engage, and convert.
+    </p>
+  </div>
+</section>
+{% endif %}
+
+<!-- ================= SERVICES GRID ================= -->
+<section class="relative bg-gradient-to-b from-dark via-[#121212] to-dark text-gray-100 py-24 px-6">
+  <div class="max-w-7xl mx-auto text-center">
+    <h2 class="text-4xl md:text-5xl font-bold text-brand mb-12 tracking-tight">
+      What We Do Best
+    </h2>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
+      {% for s in [
+        {'icon': '👥', 'title': 'Social Media Marketing', 'desc': 'Reach, engage, and grow your audience through impactful campaigns.'},
+        {'icon': '📈', 'title': 'Social Media Optimization', 'desc': 'Optimize your content and timing for maximum reach and visibility.'},
+        {'icon': '🔍', 'title': 'Search Engine Optimization', 'desc': 'Rank higher and drive long-term organic traffic growth.'},
+        {'icon': '💰', 'title': 'Search Engine Marketing', 'desc': 'Execute data-driven paid campaigns that deliver measurable ROI.'},
+        {'icon': '🏷️', 'title': 'Brand Management', 'desc': 'Shape, protect, and amplify your brand’s unique identity.'},
+        {'icon': '🤖', 'title': 'Marketing Automation', 'desc': 'Automate campaigns, nurture leads, and track performance effortlessly.'},
+        {'icon': '💬', 'title': 'WhatsApp Marketing', 'desc': 'Engage customers through personalized WhatsApp automation.'},
+        {'icon': '✉️', 'title': 'Email Marketing', 'desc': 'Deliver powerful, high-converting email campaigns that retain users.'},
+        {'icon': '🎥', 'title': 'Video Production', 'desc': 'Craft cinematic visuals that tell stories and capture attention.'},
+        {'icon': '🧩', 'title': 'UI/UX Design', 'desc': 'Design seamless experiences that delight and convert audiences.'},
+        {'icon': '📸', 'title': 'Photography', 'desc': 'Create stunning visuals that elevate your brand narrative.'}
+      ] %}
+      <div class="relative group bg-[#111111] p-10 rounded-2xl shadow-xl border border-white/10 hover:border-brand transition-all duration-300 hover:scale-[1.03]">
+        <div class="text-5xl mb-6 group-hover:text-brand transition-colors">{{ s.icon }}</div>
+        <h3 class="text-2xl font-semibold text-light mb-3 group-hover:text-brand transition-colors">{{ s.title }}</h3>
+        <p class="text-soft leading-relaxed">{{ s.desc }}</p>
+
+        <!-- Glow effect -->
+        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 pointer-events-none">
+          <div class="absolute -inset-[2px] bg-gradient-to-br from-brand/40 to-transparent blur-2xl rounded-2xl"></div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section class="relative bg-gradient-to-r from-[#1a1a1a] via-mid to-dark text-center py-24">
+  <h2 class="text-4xl md:text-5xl font-bold text-light mb-4">
+    Need a Custom Solution?
+  </h2>
+  <p class="text-lg text-soft mb-8">
+    Let’s design a creative plan tailored perfectly to your goals.
+  </p>
+  <a href="{{ url_for('contact') }}" 
+     class="inline-block bg-brand text-white px-10 py-4 rounded-full font-semibold hover:opacity-90 transition-all duration-300">
+    Contact Us
+  </a>
+</section>
+
+{% endblock %}

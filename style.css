@@ -1,0 +1,213 @@
+/* --- Premium Modern Photography Theme --- */
+
+/* --- Typography & Base --- */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Onest:wght@400;600;700&display=swap');
+
+:root {
+  --primary-color: #FF007F;      /* vibrant pink */
+  --secondary-color: #000000;    /* deep black */
+  --accent-color: #FFFFFF;       /* white text */
+  --gray-light: #F5F5F5;
+  --gray-dark: #333333;
+}
+
+body {
+  font-family: 'Manrope', sans-serif;
+  margin: 0;
+  background-color: var(--gray-light);
+  color: var(--gray-dark);
+  line-height: 1.6;
+}
+
+/* --- Header --- */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(10px);
+  padding: 20px 40px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+header h1 a {
+  text-decoration: none;
+  color: var(--accent-color);
+  font-family: 'Onest', sans-serif;
+  font-weight: 700;
+  font-size: 1.6rem;
+  letter-spacing: 1px;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--gray-light);
+  margin: 0 12px;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: var(--primary-color);
+}
+
+/* --- Hero Section --- */
+.hero {
+  position: relative;
+  height: 80vh;
+  background: url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1650&q=80") center/cover no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--accent-color);
+  text-align: center;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  padding: 20px;
+}
+
+.hero h1 {
+  font-family: 'Onest', sans-serif;
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 25px;
+}
+
+.cta-buttons a {
+  display: inline-block;
+  margin: 8px;
+  padding: 12px 30px;
+  border-radius: 40px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.cta-primary {
+  background: var(--primary-color);
+  color: var(--accent-color);
+}
+
+.cta-primary:hover {
+  background: #e60073;
+}
+
+.cta-secondary {
+  border: 2px solid var(--accent-color);
+  color: var(--accent-color);
+}
+
+.cta-secondary:hover {
+  background: var(--accent-color);
+  color: var(--secondary-color);
+}
+
+/* --- Intro Section --- */
+.intro {
+  text-align: center;
+  padding: 80px 20px;
+  background: var(--accent-color);
+}
+
+.intro h2 {
+  font-family: 'Onest', sans-serif;
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+  color: var(--secondary-color);
+}
+
+.intro p {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--gray-dark);
+}
+
+/* --- Contact Section --- */
+.contact {
+  background: var(--secondary-color);
+  color: var(--accent-color);
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.contact h3 {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+}
+
+.contact p {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.contact a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.contact a:hover {
+  text-decoration: underline;
+}
+
+/* --- Gallery Grid --- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin: 40px;
+}
+
+.photo {
+  background: var(--accent-color);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  transition: transform 0.3s;
+}
+
+.photo:hover {
+  transform: scale(1.02);
+}
+
+.photo img, .photo video {
+  width: 100%;
+  display: block;
+  border-radius: 12px;
+}
+
+/* --- Buttons --- */
+button, .btn {
+  font-family: 'Manrope', sans-serif;
+  background: var(--primary-color);
+  color: var(--accent-color);
+  border: none;
+  padding: 12px 24px;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+button:hover, .btn:hover {
+  background: #e60073;
+}

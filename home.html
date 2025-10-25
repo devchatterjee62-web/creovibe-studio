@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block title %}Creovibe | Digital Studio{% endblock %}
+{% block content %}
+
+<!-- ================= HERO ================= -->
+<section class="relative w-full h-screen overflow-hidden flex items-center justify-center text-center bg-black text-light">
+  <!-- Dynamic Hero Background -->
+  {% if hero %}
+    {% if hero.media_type == 'video' %}
+      <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover opacity-60">
+        <source src="{{ url_for('static', filename='uploads/' + hero.filename) }}" type="video/mp4">
+      </video>
+    {% else %}
+      <img src="{{ url_for('static', filename='uploads/' + hero.filename) }}" 
+           class="absolute inset-0 w-full h-full object-cover opacity-60" alt="Hero Image">
+    {% endif %}
+  {% else %}
+    <div class="absolute inset-0 bg-gradient-to-b from-black via-[#121212] to-black"></div>
+  {% endif %}
+
+  <!-- Overlay gradient -->
+  <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black"></div>
+
+  <!-- Hero content -->
+  <div class="relative z-10 max-w-3xl mx-auto px-6">
+    <h1 class="text-5xl md:text-7xl font-extrabold text-brand mb-6 tracking-tight drop-shadow-lg">
+      Creovibe Digital Studio
+    </h1>
+    <p class="text-lg md:text-xl text-gray-300 mb-10">
+      Crafting visuals that move audiences & elevate brands.
+    </p>
+    <div class="flex flex-wrap justify-center gap-6">
+      <a href="{{ url_for('services_page') }}" 
+         class="bg-brand text-black px-8 py-3 rounded-full font-semibold hover:bg-[#ff4d4d] transition-all duration-300 shadow-lg">
+        Our Services
+      </a>
+      <a href="{{ url_for('contact') }}" 
+         class="px-8 py-3 rounded-full font-semibold border border-brand text-brand hover:bg-brand hover:text-white transition-all duration-300">
+        Get in Touch
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT SECTION ================= -->
+<section class="bg-gradient-to-b from-[#0b0b0b] via-[#111111] to-[#0b0b0b] py-24 text-center px-6">
+  <div class="max-w-5xl mx-auto">
+    <h2 class="text-4xl md:text-5xl font-bold text-brand mb-6">
+      Where Vision Meets Perfection
+    </h2>
+    <p class="text-gray-400 max-w-3xl mx-auto leading-relaxed">
+      We combine creativity, precision, and technology to visually represent your brand’s story.
+      From strategy to design, we ensure every frame leaves a lasting impression.
+    </p>
+  </div>
+</section>
+
+<!-- ================= FEATURED SERVICES ================= -->
+<section class="relative bg-gradient-to-b from-[#0b0b0b] via-[#141414] to-[#0b0b0b] py-24 px-6 text-center">
+  <div class="max-w-7xl mx-auto">
+    <h2 class="text-4xl md:text-5xl font-bold text-brand mb-12">Our Core Services</h2>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
+      {% for s in [
+        {'icon': '🎥', 'title': 'Video Production', 'desc': 'Cinematic visuals that inspire and tell your brand story.'},
+        {'icon': '📸', 'title': 'Photography', 'desc': 'Professional imagery that defines your brand’s personality.'},
+        {'icon': '👥', 'title': 'Social Media Marketing', 'desc': 'Reach, engage, and convert your ideal audience.'},
+        {'icon': '🏷️', 'title': 'Brand Management', 'desc': 'Shape, protect, and amplify your brand identity.'},
+        {'icon': '📈', 'title': 'SEO & Growth', 'desc': 'Optimize and accelerate your digital visibility.'},
+        {'icon': '🤖', 'title': 'Automation', 'desc': 'Smarter, faster marketing powered by automation.'}
+      ] %}
+      <div class="relative group bg-[#111111] p-10 rounded-2xl shadow-xl border border-white/10 hover:border-brand transition-all duration-300 hover:scale-[1.03]">
+        <div class="text-5xl mb-6 group-hover:text-brand transition-colors">{{ s.icon }}</div>
+        <h3 class="text-2xl font-semibold text-white mb-3 group-hover:text-brand transition-colors">{{ s.title }}</h3>
+        <p class="text-gray-400 leading-relaxed">{{ s.desc }}</p>
+        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 pointer-events-none">
+          <div class="absolute -inset-[2px] bg-gradient-to-br from-brand/40 to-transparent blur-2xl rounded-2xl"></div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section class="bg-gradient-to-b from-[#141414] via-[#121212] to-[#0b0b0b] text-center py-24">
+  <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Let's Capture Your Story</h2>
+  <p class="text-lg text-gray-400 mb-10">Talk to us about your creative project today.</p>
+  <a href="{{ url_for('contact') }}" 
+     class="bg-brand text-black px-10 py-4 rounded-full font-semibold hover:bg-[#ff4d4d] transition-all duration-300 shadow-xl">
+    Book a Session
+  </a>
+</section>
+
+{% endblock %}

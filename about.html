@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}About | Creovibe Digital Studio{% endblock %}
+{% block content %}
+
+<!-- ================= HERO ================= -->
+<section class="relative w-full h-[80vh] overflow-hidden flex items-center justify-center text-center bg-black text-light">
+  {% if about_images and about_images[0].media_type == 'video' %}
+    <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover opacity-60">
+      <source src="{{ url_for('static', filename='uploads/' + about_images[0].filename) }}" type="video/mp4">
+    </video>
+  {% elif about_images %}
+    <img src="{{ url_for('static', filename='uploads/' + about_images[0].filename) }}"
+         class="absolute inset-0 w-full h-full object-cover opacity-60" alt="About Creovibe">
+  {% else %}
+    <div class="absolute inset-0 bg-gradient-to-b from-black via-[#121212] to-black"></div>
+  {% endif %}
+
+  <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black"></div>
+
+  <div class="relative z-10 max-w-3xl mx-auto px-6">
+    <h1 class="text-5xl md:text-6xl font-extrabold text-brand mb-4 tracking-tight drop-shadow-lg">
+      About Creovibe
+    </h1>
+    <p class="text-lg md:text-xl text-gray-300">
+      We turn imagination into visual storytelling that inspires and connects.
+    </p>
+  </div>
+</section>
+
+<!-- ================= OUR STORY ================= -->
+<section class="bg-gradient-to-b from-[#0b0b0b] via-[#121212] to-[#0b0b0b] py-24 px-6 text-center">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-4xl md:text-5xl font-bold text-brand mb-10">Our Story</h2>
+    <p class="text-gray-400 max-w-4xl mx-auto leading-relaxed">
+      Founded with a passion for creativity and a love for storytelling, Creovibe Digital Studio blends 
+      art and technology to bring your brand’s vision to life. Our team of photographers, designers, and 
+      marketers work in harmony to deliver experiences that move audiences and build lasting impressions.
+    </p>
+  </div>
+</section>
+
+<!-- ================= TEAM / VISION SECTION ================= -->
+<section class="relative bg-gradient-to-b from-[#121212] via-[#1a1a1a] to-[#0b0b0b] py-24 px-6">
+  <div class="max-w-7xl mx-auto text-center">
+    <h2 class="text-4xl md:text-5xl font-bold text-brand mb-12">Our Vision & Values</h2>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
+      {% for v in [
+        {'icon': '🚀', 'title': 'Innovation', 'desc': 'We constantly push creative boundaries and experiment with new ideas.'},
+        {'icon': '🎯', 'title': 'Precision', 'desc': 'Every pixel, every frame, and every line of copy is crafted with intent.'},
+        {'icon': '🤝', 'title': 'Collaboration', 'desc': 'We partner closely with clients to bring authentic stories to life.'},
+        {'icon': '🔥', 'title': 'Passion', 'desc': 'Driven by creativity, powered by passion — every project is personal.'},
+        {'icon': '🌍', 'title': 'Impact', 'desc': 'Our work is designed to resonate globally and make a real difference.'},
+        {'icon': '💡', 'title': 'Vision', 'desc': 'We see beyond trends to shape the future of visual communication.'}
+      ] %}
+      <div class="relative group bg-[#111111] p-10 rounded-2xl shadow-xl border border-white/10 hover:border-brand transition-all duration-300 hover:scale-[1.03]">
+        <div class="text-5xl mb-6 group-hover:text-brand transition-colors">{{ v.icon }}</div>
+        <h3 class="text-2xl font-semibold text-white mb-3 group-hover:text-brand transition-colors">{{ v.title }}</h3>
+        <p class="text-gray-400 leading-relaxed">{{ v.desc }}</p>
+        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 pointer-events-none">
+          <div class="absolute -inset-[2px] bg-gradient-to-br from-brand/40 to-transparent blur-2xl rounded-2xl"></div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section class="bg-gradient-to-b from-[#141414] via-[#121212] to-[#0b0b0b] text-center py-24">
+  <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
+    Want to Work With Us?
+  </h2>
+  <p class="text-lg text-gray-400 mb-10">
+    Let's collaborate to create something extraordinary for your brand.
+  </p>
+  <a href="{{ url_for('contact') }}" 
+     class="bg-brand text-black px-10 py-4 rounded-full font-semibold hover:bg-[#ff4d4d] transition-all duration-300 shadow-xl">
+    Contact Us
+  </a>
+</section>
+
+{% endblock %}

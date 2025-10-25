@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Meta -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Creovibe | Premium Photography{% endblock %}</title>
+
+  <!-- Tailwind + Fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Lightbox -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet"/>
+
+  <!-- Tailwind Custom Theme -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: '#FF5C5C',
+            brand2: '#FF1F4B',
+            dark: '#0b0b0b',
+            mid: '#141414',
+            light: '#f8f8f8',
+            soft: '#999999'
+          },
+          fontFamily: {
+            sans: ['Poppins', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #0b0b0b;
+      color: #f8f8f8;
+      scroll-behavior: smooth;
+      line-height: 1.6;
+    }
+
+    a { transition: all 0.3s ease; }
+
+    .text-brand { color: #FF5C5C; }
+    .bg-brand { background-color: #FF5C5C; }
+    .hover-brand:hover { color: #FF1F4B; }
+
+    .nav-glass {
+      background: rgba(10, 10, 10, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .btn {
+      background: linear-gradient(90deg, #FF5C5C, #FF1F4B);
+      color: #fff;
+      font-weight: 600;
+      padding: 10px 25px;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+    .btn:hover { transform: scale(1.05); opacity: 0.9; }
+
+    footer a:hover { color: #FF5C5C; }
+
+    .flash-msg { animation: fadeIn 0.6s ease; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body class="relative min-h-screen flex flex-col bg-dark text-light">
+
+  <!-- ================= NAVBAR ================= -->
+  <nav class="nav-glass fixed top-0 w-full z-50">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+      <!-- Logo -->
+      <a href="{{ url_for('home') }}" class="text-3xl font-bold text-brand tracking-wide">Creovibe</a>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex space-x-8 text-sm font-medium">
+        <a href="{{ url_for('home') }}" class="hover-brand">Home</a>
+        <a href="{{ url_for('services_page') }}" class="hover-brand">Services</a>
+        <a href="{{ url_for('about') }}" class="hover-brand">About</a>
+        <a href="{{ url_for('portfolio') }}" class="hover-brand">Portfolio</a> <!-- Added -->
+        <a href="{{ url_for('contact') }}" class="hover-brand">Contact</a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button id="menuBtn" aria-label="Toggle menu" class="md:hidden text-3xl text-gray-300 focus:outline-none">☰</button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden flex-col bg-black/95 md:hidden text-center border-t border-gray-800">
+      <a href="{{ url_for('home') }}" class="block py-3 hover-brand">Home</a>
+      <a href="{{ url_for('services_page') }}" class="block py-3 hover-brand">Services</a>
+      <a href="{{ url_for('about') }}" class="block py-3 hover-brand">About</a>
+      <a href="{{ url_for('portfolio') }}" class="block py-3 hover-brand">Portfolio</a> <!-- Added -->
+      <a href="{{ url_for('contact') }}" class="block py-3 hover-brand">Contact</a>
+    </div>
+  </nav>
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <main class="flex-grow pt-24 px-4">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="mb-6 text-center">
+          {% for category, message in messages %}
+            <div class="flash-msg inline-block px-5 py-2 bg-gray-800/80 text-white rounded-lg shadow">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-mid text-gray-400 text-center py-10 border-t border-gray-800 mt-12">
+    <div class="max-w-7xl mx-auto px-6 space-y-4">
+      <div>
+        <h2 class="text-2xl font-bold text-brand">Creovibe</h2>
+        <p class="text-sm text-soft">Premium Photography & Visual Artistry</p>
+      </div>
+
+      <div class="flex justify-center space-x-6 text-sm">
+        <a href="{{ url_for('home') }}" class="hover-brand">Home</a>
+        <a href="{{ url_for('services_page') }}" class="hover-brand">Services</a>
+        <a href="{{ url_for('about') }}" class="hover-brand">About</a>
+        <a href="{{ url_for('portfolio') }}" class="hover-brand">Portfolio</a> <!-- Added -->
+        <a href="{{ url_for('contact') }}" class="hover-brand">Contact</a>
+      </div>
+
+      <div class="text-xs text-gray-600 mt-4">
+        © {{ current_year if current_year else 2025 }} 
+        <span class="text-brand font-semibold">Creovibe</span> — All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= SCRIPTS ================= -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+  <script>
+    // Mobile menu toggle
+    const menuBtn = document.getElementById("menuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    if (menuBtn) {
+      menuBtn.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+        menuBtn.textContent = mobileMenu.classList.contains("hidden") ? "☰" : "✕";
+      });
+    }
+  </script>
+</body>
+</html>

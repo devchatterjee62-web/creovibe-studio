@@ -7,14 +7,13 @@ import os, uuid, smtplib, ssl
 
 # -------------------- App Config --------------------
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///instance/creovibe.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///creovibe.db'
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 50 MB
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'mp4', 'webm', 'ogg', 'mov'}
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-os.makedirs('instance', exist_ok=True)
 
 db = SQLAlchemy(app)
 

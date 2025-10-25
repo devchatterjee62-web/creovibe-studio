@@ -7,20 +7,21 @@ import os, uuid, smtplib, ssl
 
 # -------------------- App Config --------------------
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///creovibe.db'
-app.config['SECRET_KEY'] = 'creovibe_secret_key'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///instance/creovibe.db'
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 50 MB
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'mp4', 'webm', 'ogg', 'mov'}
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+os.makedirs('instance', exist_ok=True)
 
 db = SQLAlchemy(app)
 
 # -------------------- Gmail Config --------------------
-EMAIL_SENDER = "creovibe001@gmail.com"
-EMAIL_PASSWORD = "ejem rsiu zzbq lcfx"  # Gmail App Password
-EMAIL_RECEIVER = "creovibe001@gmail.com"  # You receive messages here
+EMAIL_SENDER = os.environ.get('EMAIL_SENDER', '')
+EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD', '')
+EMAIL_RECEIVER = os.environ.get('EMAIL_RECEIVER', EMAIL_SENDER)
 
 
 # -------------------- Database Models --------------------
@@ -43,8 +44,9 @@ class Media(db.Model):
 
 
 # -------------------- Admin Auth --------------------
-ADMIN_USERNAME = "admin"
-ADMIN_PASSWORD_HASH = generate_password_hash("creovibe123")
+ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME', 'admin')
+ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'creovibe123')
+ADMIN_PASSWORD_HASH = generate_password_hash(ADMIN_PASSWORD)
 
 
 def login_required(f):
@@ -209,20 +211,23 @@ def contact():
         email = request.form.get('email', '')
         message = request.form.get('message', '')
 
-        # Send email using Gmail SMTP
-        try:
-            subject = f"📩 New message from {name}"
-            body = f"From: {name}\nEmail: {email}\n\nMessage:\n{message}"
-            email_text = f"Subject: {subject}\n\n{body}"
+        # Send email using Gmail SMTP (only if credentials are configured)
+        if EMAIL_SENDER and EMAIL_PASSWORD:
+            try:
+                subject = f"📩 New message from {name}"
+                body = f"From: {name}\nEmail: {email}\n\nMessage:\n{message}"
+                email_text = f"Subject: {subject}\n\n{body}"
 
-            context = ssl.create_default_context()
-            with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
-                server.login(EMAIL_SENDER, EMAIL_PASSWORD)
-                server.sendmail(EMAIL_SENDER, EMAIL_RECEIVER, email_text.encode("utf-8"))
+                context = ssl.create_default_context()
+                with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+                    server.login(EMAIL_SENDER, EMAIL_PASSWORD)
+                    server.sendmail(EMAIL_SENDER, EMAIL_RECEIVER, email_text.encode("utf-8"))
 
-            flash(f"✅ Thanks {name}, your message was sent successfully!", "success")
-        except Exception as e:
-            flash(f"❌ Failed to send message: {e}", "error")
+                flash(f"✅ Thanks {name}, your message was sent successfully!", "success")
+            except Exception as e:
+                flash(f"❌ Failed to send message: {e}", "error")
+        else:
+            flash(f"✅ Thanks {name}, your message was received! (Email not configured)", "success")
 
         return redirect(url_for("contact"))
     return render_template("contact.html")
@@ -241,4 +246,4 @@ def create_default_admin():
 if __name__ == '__main__':
     with app.app_context():
         create_default_admin()
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)

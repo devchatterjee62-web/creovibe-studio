@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}{{ service.name }} | Creovibe{% endblock %}
+{% block content %}
+
+<!-- ================= SERVICE HEADER ================= -->
+<section class="relative overflow-hidden bg-gradient-to-b from-dark via-mid to-[#1a1a1a] text-center text-light py-28">
+  <div class="max-w-4xl mx-auto px-6">
+    <h1 class="text-5xl md:text-6xl font-extrabold text-brand mb-6 tracking-tight">
+      {{ service.name }}
+    </h1>
+    <p class="text-lg text-soft max-w-2xl mx-auto">
+      {{ service.description }}
+    </p>
+  </div>
+</section>
+
+<!-- ================= PHOTOS GALLERY ================= -->
+{% if photos %}
+<section class="relative bg-gradient-to-b from-[#121212] to-dark py-20 px-6">
+  <div class="max-w-7xl mx-auto">
+    <h2 class="text-4xl font-bold text-brand text-center mb-12">Photo Gallery</h2>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for photo in photos %}
+      <a href="{{ url_for('static', filename='uploads/' + photo.filename) }}" 
+         data-lightbox="service-photos" 
+         data-title="{{ photo.caption or service.name }}"
+         class="group relative block overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300">
+        <img src="{{ url_for('static', filename='uploads/' + photo.filename) }}" 
+             alt="{{ photo.caption or service.name }}"
+             class="w-full h-72 object-cover group-hover:scale-110 transition-transform duration-500">
+        {% if photo.caption %}
+        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+          <p class="text-white text-sm">{{ photo.caption }}</p>
+        </div>
+        {% endif %}
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ================= VIDEOS GALLERY ================= -->
+{% if videos %}
+<section class="relative bg-gradient-to-b from-dark to-[#121212] py-20 px-6">
+  <div class="max-w-7xl mx-auto">
+    <h2 class="text-4xl font-bold text-brand text-center mb-12">Video Gallery</h2>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for video in videos %}
+      <div class="relative group overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300">
+        <video controls class="w-full h-72 object-cover bg-black">
+          <source src="{{ url_for('static', filename='uploads/' + video.filename) }}" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        {% if video.caption %}
+        <div class="mt-2 px-2">
+          <p class="text-soft text-sm">{{ video.caption }}</p>
+        </div>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ================= NO MEDIA MESSAGE ================= -->
+{% if not photos and not videos %}
+<section class="relative bg-dark py-20 px-6">
+  <div class="max-w-4xl mx-auto text-center">
+    <p class="text-soft text-lg">No media uploaded yet for this service.</p>
+  </div>
+</section>
+{% endif %}
+
+<!-- ================= CTA ================= -->
+<section class="relative bg-gradient-to-r from-[#1a1a1a] via-mid to-dark text-center py-24">
+  <h2 class="text-4xl md:text-5xl font-bold text-light mb-4">
+    Interested in {{ service.name }}?
+  </h2>
+  <p class="text-lg text-soft mb-8">
+    Let's discuss how we can help bring your vision to life.
+  </p>
+  <a href="{{ url_for('contact') }}" 
+     class="inline-block bg-brand text-white px-10 py-4 rounded-full font-semibold hover:opacity-90 transition-all duration-300">
+    Contact Us
+  </a>
+</section>
+
+{% endblock %}
